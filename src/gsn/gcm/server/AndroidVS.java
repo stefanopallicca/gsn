@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.google.android.gcm.demo.server;
+package gsn.gcm.server;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,7 +20,7 @@ import gsn.beans.Modifications;
 /**
  * @author Stefano Pallicca
  * 
- *
+ * 
  */
 public class AndroidVS {
 	
@@ -36,6 +36,15 @@ public class AndroidVS {
 	}
 	
 	/**
+	 * This method creates a new virtual sensor based on passed parameters.
+	 * Beware that the name of the virtual sensor is created pseudo-randomly, since for GSN to work, every VS
+	 * needs to have a unique name.
+	 * In order to avoid sending too many messages, two thresholds are actually defined: a yellow threshold corresponding
+	 * to the actual {@code threshold} parameter, and a red threshold set at 98% (102%) of the threshold value, when the
+	 * {@code eventString} is set to BELOW (ABOVE).
+	 * There must be three consecutive values below (above) the yellow threshold for the virtual sensor to trigger a notification,
+	 * whereas one single value below (above) the red threshold will trigger a notification.
+	 * 
 	 * @param regid Device registration ID, obtained from Google Cloud
 	 * @param vsName Virtual Sensor name, must be among the active set of VSs running on the GSN server
 	 * @param field Field name, must exist among the fields of {@code vsName}
@@ -152,6 +161,15 @@ public class AndroidVS {
 		}
 	}
 	
+	/**
+	 * Remove a virtual sensor triggering a notification. If no more notifications are associated with the given {@code regid},
+	 * the corresponding device is removed from the list of registered devices.
+	 * 
+	 * @param regid Registration ID of the device
+	 * @param vsName Virtual Sensor name
+	 * @param field Virtual Sensor field
+	 * @return
+	 */
 	public static boolean remove(final String regid, String vsName, String field){
 		String filename = regid+vsName+field+".xml";
 		File fh = new File(VS_URL+filename);
@@ -184,7 +202,9 @@ public class AndroidVS {
 	}
 
 	/**
-	 * Remove all files associated with device {@code regid} and unregisters device
+	 * Remove all files associated with device {@code regid} and unregisters device.
+	 * This method differs from the above one for this unregisters the device and removes all its associated VSs,
+	 * whereas the other one removes only one VS and, in case there are no VSs left, unregisters the device, too.
 	 * 
 	 * @param regid Device registration ID
 	 * @return {@code true} if all files are successfully deleted, {@code false} if some file was not deleted
@@ -205,6 +225,7 @@ public class AndroidVS {
     
     for ( final File file : files ) {
     	try{
+    		file.setWritable(true);
     		file.delete();
       } catch(SecurityException e){
       	logger.info("Unable to delete file: "+file.getName());

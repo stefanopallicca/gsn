@@ -1,12 +1,11 @@
 package gsn.utils.services;
 
+import gsn.gcm.server.*;
 import gsn.utils.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.android.gcm.demo.server.*;
 
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.http.HttpResponse;

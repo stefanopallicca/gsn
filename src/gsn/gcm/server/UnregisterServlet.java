@@ -13,19 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.android.gcm.demo.server;
+package gsn.gcm.server;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet that unregisters a device, whose registration id is identified by
- * {@link #PARAMETER_REG_ID}.
- * <p>
- * The client app should call this servlet everytime it receives a
- * {@code com.google.android.c2dm.intent.REGISTRATION} with an
- * {@code unregistered} extra.
+ * Servlet that unregisters a device with given regId
  */
 @SuppressWarnings("serial")
 public class UnregisterServlet extends BaseServlet {

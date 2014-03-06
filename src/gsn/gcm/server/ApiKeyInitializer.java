@@ -1,4 +1,4 @@
-package com.google.android.gcm.demo.server;
+package gsn.gcm.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;

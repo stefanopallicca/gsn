@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.android.gcm.demo.server;
+package gsn.gcm.server;
 
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Message;
@@ -55,8 +55,8 @@ public class SendAllMessagesServlet extends BaseServlet {
    * Creates the {@link Sender} based on the servlet settings.
    */
   protected Sender newSender(ServletConfig config) {
-    /*String key = (String) config.getServletContext()
-        .getAttribute(ApiKeyInitializer.ATTRIBUTE_ACCESS_KEY);*/
+    //String key = (String) config.getServletContext()
+    //    .getAttribute(ApiKeyInitializer.ATTRIBUTE_ACCESS_KEY);
   	String key = "AIzaSyCbZK9Lb6eMPhCUAygwKWYcf_ncexYDb4o";
     return new Sender(key);
   }
@@ -76,79 +76,14 @@ public class SendAllMessagesServlet extends BaseServlet {
     	status = "Message ignored since I can't find this device among registered devices";
     }
     else {
-      // NOTE: check below is for demonstration purposes; a real application
-      // could always send a multicast, even for just one recipient
-      //if (devices.size() == 1) {
-        // send a single message using plain post
         Message message = new Message.Builder().addData("body", req.getParameter("body")).build();
         Result result = sender.send(message, device, 5);
         status = "Sent message: \"" + req.getParameter("body") + "\" to one device("+device+"): " + result;
-      /*} else {
-        // send a multicast message using JSON
-        // must split in chunks of 1000 devices (GCM limit)
-        int total = devices.size();
-        List<String> partialDevices = new ArrayList<String>(total);
-        int counter = 0;
-        int tasks = 0;
-        for (String device : devices) {
-          counter++;
-          partialDevices.add(device);
-          int partialSize = partialDevices.size();
-          if (partialSize == MULTICAST_SIZE || counter == total) {
-            asyncSend(partialDevices, req.getParameter("body"));
-            partialDevices.clear();
-            tasks++;
-          }
-        }
-        status = "Asynchronously sending " + tasks + " multicast messages to " +
-            total + " devices";
-      }*/
     }
-    req.setAttribute(HomeServlet.ATTRIBUTE_STATUS, status.toString());
     logger.info(status.toString());
     getServletContext().getRequestDispatcher("/home").forward(req, resp); 	
   }
   
-  /*protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException, ServletException {
-    List<String> devices = Datastore.getDevices();
-    String status;
-    if (devices.isEmpty()) {
-      status = "Message ignored as there is no device registered!";
-    } else {
-      // NOTE: check below is for demonstration purposes; a real application
-      // could always send a multicast, even for just one recipient
-      if (devices.size() == 1) {
-        // send a single message using plain post
-        String registrationId = devices.get(0);
-        Message message = new Message.Builder().addData("body", req.getParameter("body")).build();
-        Result result = sender.send(message, registrationId, 5);
-        status = "Sent message: \"" + req.getParameter("body") + "\" to one device: " + result;
-      } else {
-        // send a multicast message using JSON
-        // must split in chunks of 1000 devices (GCM limit)
-        int total = devices.size();
-        List<String> partialDevices = new ArrayList<String>(total);
-        int counter = 0;
-        int tasks = 0;
-        for (String device : devices) {
-          counter++;
-          partialDevices.add(device);
-          int partialSize = partialDevices.size();
-          if (partialSize == MULTICAST_SIZE || counter == total) {
-            asyncSend(partialDevices, req.getParameter("body"));
-            partialDevices.clear();
-            tasks++;
-          }
-        }
-        status = "Asynchronously sending " + tasks + " multicast messages to " +
-            total + " devices";
-      }
-    }
-    req.setAttribute(HomeServlet.ATTRIBUTE_STATUS, status.toString());
-    logger.info(status.toString());
-    getServletContext().getRequestDispatcher("/home").forward(req, resp);
-  }*/
 
   private void asyncSend(List<String> partialDevices, final String messageBody) {
     // make a copy
@@ -156,7 +91,6 @@ public class SendAllMessagesServlet extends BaseServlet {
     threadPool.execute(new Runnable() {
 
       public void run() {
-        //Message message = new Message.Builder().addData("fava", "async").build();
       	Message message = new Message.Builder().addData("body", messageBody).build();
         MulticastResult multicastResult;
         try {
@@ -191,7 +125,7 @@ public class SendAllMessagesServlet extends BaseServlet {
             }
           }
         }
-      }});
+      }
+    });
   }
-
 }

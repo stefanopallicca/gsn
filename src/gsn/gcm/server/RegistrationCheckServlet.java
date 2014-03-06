@@ -1,19 +1,4 @@
-/*
- * Copyright 2012 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package com.google.android.gcm.demo.server;
+package gsn.gcm.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,13 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet that registers a device, whose registration id is identified by
- * {@link #PARAMETER_REG_ID}.
+ * This servlet checks if a device was already registered with this server.
+ * It provides a doGet method which requests a {@code regId} parameter, 
+ * and returns a JSON string of type {found: true|false}
  *
- * <p>
- * The client app should call this servlet everytime it receives a
- * {@code com.google.android.c2dm.intent.REGISTRATION C2DM} intent without an
- * error or {@code unregistered} extra.
  */
 @SuppressWarnings("serial")
 public class RegistrationCheckServlet extends BaseServlet {
@@ -53,21 +35,19 @@ public class RegistrationCheckServlet extends BaseServlet {
 				out.println("{");
 				out.println("\"found\":\"true\"");
 				out.println("}");
-				logger.info("FOUND!!!");
+				logger.info("Device asking for registration already in the database of known devices");
     	}
     	else{
 				out.println("{");
 				out.println("\"found\":\"false\"");
 				out.println("}");
-				logger.info("NOT FOUND!!!");
+				logger.info("New device asking for registration");
     	}
     	
     	out.flush();
     } catch(IOException e){
     	logger.info(e.toString());
     }
-			
-    //setSuccess(resp);
   }
 
 }

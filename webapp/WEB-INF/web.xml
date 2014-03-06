@@ -237,37 +237,37 @@
 	<servlet>
         <servlet-name>GCMManager</servlet-name>
         <display-name>Google Cloud Messaging for GSN</display-name>
-        <servlet-class>com.google.android.gcm.demo.server.HomeServlet</servlet-class>
+        <servlet-class>gsn.gcm.server.HomeServlet</servlet-class>
   </servlet>
 	<servlet>
         <servlet-name>GCMRegisterDeviceServlet</servlet-name>
         <display-name>Google Cloud Messaging for GSN</display-name>
-        <servlet-class>com.google.android.gcm.demo.server.RegisterServlet</servlet-class>
+        <servlet-class>gsn.gcm.server.RegisterServlet</servlet-class>
   </servlet>
 	<servlet>
         <servlet-name>GCMSendAllServlet</servlet-name>
         <display-name>GCM Send Message</display-name>
-        <servlet-class>com.google.android.gcm.demo.server.SendAllMessagesServlet</servlet-class>
+        <servlet-class>gsn.gcm.server.SendAllMessagesServlet</servlet-class>
   </servlet>
 	<servlet>
         <servlet-name>GCMRegistrationCheckServlet</servlet-name>
         <display-name>GCM Check Device Registration</display-name>
-        <servlet-class>com.google.android.gcm.demo.server.RegistrationCheckServlet</servlet-class>
+        <servlet-class>gsn.gcm.server.RegistrationCheckServlet</servlet-class>
   </servlet>
 	<servlet>
         <servlet-name>GCMUnregisterServlet</servlet-name>
         <display-name>GCM Device unregistration</display-name>
-        <servlet-class>com.google.android.gcm.demo.server.UnregisterServlet</servlet-class>
+        <servlet-class>gsn.gcm.server.UnregisterServlet</servlet-class>
   </servlet>
   <servlet>
       <servlet-name>AddVsServlet</servlet-name>
       <display-name>Add a Virtual Sensor for a device based on parameters</display-name>
-      <servlet-class>com.google.android.gcm.demo.server.AddVsServlet</servlet-class>
+      <servlet-class>gsn.gcm.server.AddVsServlet</servlet-class>
   </servlet>
 	<servlet>
         <servlet-name>GCMDelVsServlet</servlet-name>
         <display-name>GCM Device unregistration</display-name>
-        <servlet-class>com.google.android.gcm.demo.server.DelVsServlet</servlet-class>
+        <servlet-class>gsn.gcm.server.DelVsServlet</servlet-class>
   </servlet>
 
 
