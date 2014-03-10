@@ -1,5 +1,7 @@
 package gsn.utils.services;
 
+import gsn.Main;
+import gsn.beans.ContainerConfig;
 import gsn.gcm.server.*;
 import gsn.utils.Utils;
 
@@ -26,15 +28,19 @@ public class GCMService{
 		logger.warn(content);
 		/*if(time > 0) return;
 		time = 1;*/
-		HttpPost post = new HttpPost("http://localhost:22001/gcm/sendAll");
-		List<NameValuePair> contList = new ArrayList<NameValuePair>();
-		contList.add(new BasicNameValuePair("body", content));
-		contList.add(new BasicNameValuePair("dest", dest));
 		try{
+			ContainerConfig containerConfig = Main.loadContainerConfiguration();
+			int gsnPort = containerConfig.getContainerPort();
+			
+			HttpPost post = new HttpPost("http://localhost:"+gsnPort+"/gcm/sendAll");
+			List<NameValuePair> contList = new ArrayList<NameValuePair>();
+			contList.add(new BasicNameValuePair("body", content));
+			contList.add(new BasicNameValuePair("dest", dest));
+
 			post.setEntity(new UrlEncodedFormEntity(contList));
 			HttpClient client = new DefaultHttpClient();
 			HttpResponse response = client.execute(post);
-		} catch (IOException e){ e.printStackTrace(); };
+		} catch (Exception e){ e.printStackTrace(); };
 	}
 	
 }

@@ -235,11 +235,6 @@
 		<servlet-class>gsn.http.restapi.RestServlet</servlet-class>
 	</servlet>
 	<servlet>
-        <servlet-name>GCMManager</servlet-name>
-        <display-name>Google Cloud Messaging for GSN</display-name>
-        <servlet-class>gsn.gcm.server.HomeServlet</servlet-class>
-  </servlet>
-	<servlet>
         <servlet-name>GCMRegisterDeviceServlet</servlet-name>
         <display-name>Google Cloud Messaging for GSN</display-name>
         <servlet-class>gsn.gcm.server.RegisterServlet</servlet-class>
@@ -453,10 +448,6 @@
 		<servlet-name>MyAccessRightsManagementServlet</servlet-name>
 		<url-pattern>/gsn/MyAccessRightsManagementServlet</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-        <servlet-name>GCMManager</servlet-name>
-        <url-pattern>/gcm</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GCMRegisterDeviceServlet</servlet-name>
         <url-pattern>/gcm/RegisterDevice</url-pattern>
